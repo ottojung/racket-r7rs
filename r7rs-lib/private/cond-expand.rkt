@@ -28,7 +28,7 @@
 
   (define-syntax-class ce-requirement
     #:literals (6:and 6:or 6:not 6:else)
-    #:datum-literals (library)
+    #:datum-literals (library else)
     #:attributes (true?)
     (pattern (6:and req:ce-requirement ...)
              #:attr true? (andmap values (attribute req.true?)))
@@ -38,6 +38,8 @@
              #:attr true? (not (attribute req.true?)))
     (pattern (library name:library-name)
              #:attr true? (module-exists? (syntax->datum #'name.module-path)))
+    (pattern else
+             #:attr true? #t)
     (pattern 6:else
              #:attr true? #t)
     (pattern feature:id
